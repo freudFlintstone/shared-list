@@ -1,0 +1,22 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+
+
+<dom-module id="note-input">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+    </style>
+        <paper-input label="New note"></paper-input>
+  </template>
+  <script>
+  class noteInput extends Polymer.Element {
+    static get is() { return 'note-input'; }
+  }
+
+  window.customElements.define(noteInput.is, noteInput);
+  </script>
+</dom-module>
