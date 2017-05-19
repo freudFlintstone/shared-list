@@ -7,10 +7,17 @@
   <template>
     <style include="shared-styles">
       :host {
-        display: block;
+        display:flex;
       }
+      paper-input {
+        width: 100%;
+      }
+
     </style>
+
         <paper-input label="New note"></paper-input>
+        <paper-icon-button icon="my-icons:chevron-right"></paper-icon-button>
+        <paper-icon-button icon="my-icons:close"></paper-icon-button>
   </template>
   <script>
   class noteInput extends Polymer.Element {

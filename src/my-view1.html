@@ -12,6 +12,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="note-input.html">
 <link rel="import" href="../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+
+
 <link rel="import" href="note-list.html">
 
 
@@ -23,16 +26,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         padding: 10px;
       }
+      .main-panel {
+        display:flex;
+      }
+      .main-panel > paper-material:first-child {
+        margin-right: 8px;
+      }
+      .list {
+        width: 25%;
+      }
+      .editor {
+        width: 100%;
+      }
+
     </style>
 
     <paper-material elevation="1">
       <note-input></note-input>
     </paper-material>
 
-    <paper-material elevation="1">
+    <div class="main-panel">
+    <paper-material elevation="1" class="list">
       <note-list></note-list>
     </paper-material>
 
+    <paper-material elevation="1" class="editor">
+      <!-- <current-note></current-note> -->
+      <app-toolbar>
+      </app-toolbar>
+
+    </paper-material>
+    </div>
   </template>
 
   <script>
