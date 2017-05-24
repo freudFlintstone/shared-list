@@ -48,25 +48,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
     </style>
-<!-- 
-    <firebase-query
-      id="query"
-      path="/users/{{user.uid}}/notes"
-      data="{{data}}">      
-    </firebase-query> -->
 
-    <!-- <paper-material class="onboarding" elevation="1">
+    <div hidden$="[[user]]">
+    <paper-material class="onboarding" elevation="1">
       <onboard-view></onboard-view>
-    </paper-material> -->
+    </paper-material>
+    </div>
 
     <paper-material elevation="1">
       <note-input id="nInput" uid="[[user.uid]]"></note-input>
     </paper-material>
-
+    <div hidden$="[[!user]]">
     <paper-material elevation="1">
-    <note-view note="[[current]]"></note-view>
+      <note-view id="nView" note="[[current]]"></note-view>
     </paper-material>
-
+    </div>
   </template>
 
   <script>

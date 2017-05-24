@@ -4,6 +4,7 @@
 <link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-document.html">
+<link rel="import" href="../bower_components/paper-toggle-button/paper-toggle-button.html">
 
 
 <dom-module id="note-list">
@@ -17,13 +18,25 @@
         text-align: right;
       }
 
+      paper-item > p {
+        text-align: right;
+      }
+
       .label {
         text-align: left;
       }
 
       paper-icon-button { 
-        z-index:10;
+        /*z-index:10;*/
         text-align: right;
+      }
+
+      paper-toggle-button {
+       text-align: right;
+      --paper-toggle-button-checked-bar-color:  var(--paper-deep-purple-500);
+      --paper-toggle-button-checked-button-color:  var(--paper-deep-purple-500);
+      --paper-toggle-button-checked-ink-color: var(--paper-deep-purple-500);
+
       }
     </style>
 
@@ -33,15 +46,21 @@
      data="{{selNote}}"> 
     </firebase-document>
 
+    <paper-item>
+      <p><strong>Favorites</strong></p>
+      <div class="right">
+        <paper-toggle-button id="favToggle" unchecked on-checked-changed="_renderList"></paper-toggle-button>
+      </div>
+    </paper-item>
     <paper-listbox id="listbox" selected="{{selected}}" default="null">
-    <template is="dom-repeat" items="[[notes]]">
+    <template id="listTemplate" is="dom-repeat" items="[[notes]]" filter="_isFav">
       <paper-item>
       <div class="label">
         [[item.label]]
       </div>
       <!-- <div class="space"></div> -->
       <div class="right">
-        <paper-icon-button icon$="[[_isFav(item.fav)]]" on-tap="favorite" hidden$="[[!item.fav]]"></paper-icon-button>
+        <paper-icon-button icon$="[[_toggleFav(item.fav)]]" on-tap="favorite"></paper-icon-button>
         <!-- <paper-icon-button icon="my-icons:bookmark" on-tap="favorite" hidden$="[[item.fav]]"></paper-icon-button> -->
         <paper-icon-button icon="my-icons:delete-forever" on-tap="delete"></paper-icon-button>
       </div>
@@ -70,17 +89,26 @@
       }
     }
 
-    getNote(ind) {
-      return this.notes[ind]
-    }
 
-    _isFav(fav) {
+
+    _toggleFav(fav) {
       // console.log(fav)
       if (fav) {
         return "my-icons:bookmark";
       } else {
         return "my-icons:bookmark-border";
       }
+    }
+
+    _isFav(item) {
+      if(this.$.favToggle.checked && !item.fav) {  
+        return false;
+      }
+      return true;
+    }
+
+    _renderList() {
+      this.$.listTemplate.render()
     }
 
     favorite() {
@@ -91,6 +119,9 @@
     }
 
     delete() {
+      if (!this.selected) {
+        return;
+      }
       this.$.f2.setStoredValue("/users/"+this.uid+"/notes/"+this.noteID, null);
       this.$.listbox.selected = null;
       console.log(this.selected)
@@ -98,6 +129,7 @@
 
     _selectedChanged() {
       this.current = this.notes[this.selected];
+      // console.log(this.$.listbox.selectedItem)
       this.noteID = this.current.$key;
       // if (this.current) {
        // this.noteID = this.current.$key;
