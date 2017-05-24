@@ -13,7 +13,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-material/paper-material.html">
 <link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
 <link rel="import" href="note-input.html">
+<link rel="import" href="note-view.html">
 <link rel="import" href="edit-bar.html">
+<!-- <link rel="import" href="onboard-view.html"> -->
 
 
 <dom-module id="my-view1">
@@ -26,6 +28,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       .main-panel {
         display:flex;
+      }
+
+      .onboarding {
+        max-width: 90vw;
+        display: inline-flex;
+        white-space: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
       }
       /*.main-panel > paper-material:first-child {
         margin-right: 8px;
@@ -45,16 +55,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       data="{{data}}">      
     </firebase-query> -->
 
+    <!-- <paper-material class="onboarding" elevation="1">
+      <onboard-view></onboard-view>
+    </paper-material> -->
+
     <paper-material elevation="1">
-    <!-- <on-board></on-board> -->
+      <note-input id="nInput" uid="[[user.uid]]"></note-input>
     </paper-material>
 
     <paper-material elevation="1">
-      <note-input id="nInput" uid=[[user.uid]]></note-input>
-    </paper-material>
-
-    <paper-material elevation="1">
-    <note-view></note-view>
+    <note-view note="[[current]]"></note-view>
     </paper-material>
 
   </template>

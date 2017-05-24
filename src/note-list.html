@@ -2,6 +2,9 @@
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-document.html">
+
 
 <dom-module id="note-list">
   <template>
@@ -19,11 +22,18 @@
       }
 
       paper-icon-button { 
+        z-index:10;
         text-align: right;
       }
     </style>
 
-    <paper-listbox>
+    <firebase-document
+     id="f2"
+     path="/users/{{uid}}/notes/{{noteID}}"
+     data="{{selNote}}"> 
+    </firebase-document>
+
+    <paper-listbox selected="{{selected}}" fallback-selection="0">
     <template is="dom-repeat" items="[[notes]]">
       <paper-item>
       <div class="label">
@@ -31,8 +41,9 @@
       </div>
       <!-- <div class="space"></div> -->
       <div class="right">
-        <paper-icon-button icon="my-icons:bookmark-border"></paper-icon-button>
-        <paper-icon-button icon="my-icons:delete-forever"></paper-icon-button>
+        <paper-icon-button icon$="[[_isFav(item.fav)]]" on-tap="favorite" hidden$="[[!item.fav]]"></paper-icon-button>
+        <!-- <paper-icon-button icon="my-icons:bookmark" on-tap="favorite" hidden$="[[item.fav]]"></paper-icon-button> -->
+        <paper-icon-button icon="my-icons:delete-forever" on-tap="delete"></paper-icon-button>
       </div>
       </paper-item>
     </template>
@@ -45,8 +56,47 @@
 
     static get properties() {
       return {
-        notes: Object
+        notes: Object,
+        selected: {
+          type: Number,
+          observer: '_selectedChanged'
+        },
+        current: {
+          type: Object,
+          notify: true,
+          reflectToAttribute: true,
+          value: function() { return {}; }
+        }
       }
+    }
+
+    getNote(ind) {
+      return this.notes[ind]
+    }
+
+    _isFav(fav) {
+      // console.log(fav)
+      if (fav) {
+        return "my-icons:bookmark";
+      } else {
+        return "my-icons:bookmark-border";
+      }
+    }
+
+    favorite() {
+      // console.log(this.current.$key, this.current.fav)
+      // this.noteID = this.current.$key;
+      this.selNote.fav = !this.current.fav;
+      this.$.f2.setStoredValue("/users/"+this.uid+"/notes/"+this.noteID, this.selNote);
+    }
+
+    delete(e) {
+      console.log("del: "+e)
+    }
+
+    _selectedChanged() {
+      this.current = this.notes[this.selected];
+      this.noteID = this.current.$key;
     }
   }
 
