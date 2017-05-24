@@ -4,6 +4,8 @@
 <link rel="import" href="../bower_components/paper-toast/paper-toast.html">
 <link rel="import" href="../bower_components/paper-input/paper-textarea.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-document.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+
 
 
 <dom-module id="note-input">
@@ -14,8 +16,8 @@
       }
 
       .crtl-container {
-        margin-top: 20px;
-        background: var(--app-primary-color);
+        margin-top: 10px;
+        /*background: var(--app-primary-color);*/
         border-radius: 3px;
         display: inline-flex;
         width: 100%
@@ -26,11 +28,11 @@
       }
 
       paper-icon-button {
-        color: rgba(255,255,255,0.5);
+        color: rgba(25,25,25,0.5);
       }
 
       paper-icon-button:not([disabled]) {
-        color: white;
+        color: var(--app-primary-color);
         /*vertical-align: middle;*/
       }
 
@@ -43,22 +45,15 @@
      data="{{noteData}}"> 
     </firebase-document>
 
-    <paper-input id="field1" label="Título" value="{{noteData.label}}" placeholder="Título curto" class="title" maxlength="40"></paper-input>
-
-    <!-- <paper-input id="field2" placeholder="Escreva sua nota aqui"></paper-input>   -->
-
-    <!-- <paper-textarea id="field2" placeholder="Escreva sua nota aqui" value="{{noteData.value}}"></paper-textarea> -->
     <div class="crtl-container">
-      
-      <paper-icon-button icon="my-icons:share"></paper-icon-button>
-      
+       <paper-input id="field1" label="Título" value="{{tmpData.label}}" placeholder="Título curto" class="title" maxlength="40"></paper-input>
       <div class="right">
-        <paper-icon-button icon="my-icons:check-circle" on-tap="save" disabled$="[[!noteData.value]]"></paper-icon-button>
+        <paper-icon-button icon="my-icons:check-circle" on-tap="save" disabled$="[[!tmpData.value]]"></paper-icon-button>
         <paper-icon-button icon="my-icons:highlight-off" on-tap="clear"></paper-icon-button>
       </div>
     </div>
-        <paper-textarea id="field2" placeholder="Escreva sua nota aqui" value="{{noteData.value}}"></paper-textarea>
 
+    <paper-textarea id="field2" placeholder="Escreva sua nota aqui" value="{{tmpData.value}}"></paper-textarea>
 
     <paper-toast id="errorToast"></paper-toast>
   </template>
@@ -68,13 +63,21 @@
 
     static get properties() {
       return {
-        noteData: Object
+        noteData: Object,
+        tmpData: {
+          type: Object,
+          value: function() { return {}; }
+        }
       }
     }
 
     save() {
-      if(this.noteData.value) {
-        this.noteData.user = this.uid
+      if(this.tmpData.value) {
+        this.tmpData.user = this.uid;
+        this.$.f1.reset();
+        this.noteData = this.tmpData;
+        this.tmpData.fav = false;
+
         this.$.f1.saveValue("/users/"+this.uid+"/notes");
 
       } else {
@@ -85,7 +88,7 @@
 
     clear() {
       this.$.field1.value = ""
-      // this.$.field2.value = ""
+      this.$.field2.value = ""
     }
   }
 
