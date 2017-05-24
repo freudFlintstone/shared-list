@@ -1,53 +1,57 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
 
-<dom-module id="note-list">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-document.html">
+
+
+<dom-module id="note-view">
   <template>
     <style include="shared-styles">
       :host {
         display: block;
       }
-
-      paper-item {
-        text-align: right;
+       .crtl-container {
+        background: var(--app-primary-color);
+        border-radius: 3px;
+        display: inline-flex;
+        width: 100%;
+        color: white;
       }
 
-      .label {
-        text-align: left;
+      .noteTitle {
+        font-size: 2em;
+        margin-top: 20px;
+        margin-bottom: 15px
       }
-
-      paper-icon-button { 
-        text-align: right;
-      }
+     
     </style>
 
-    <paper-listbox>
-    <template is="dom-repeat" items="[[notes]]">
-      <paper-item>
-      <div class="label">
-        [[item.label]]
-      </div>
-      <!-- <div class="space"></div> -->
-      <div class="right">
-        <paper-icon-button icon="my-icons:bookmark-border"></paper-icon-button>
-        <paper-icon-button icon="my-icons:delete-forever"></paper-icon-button>
-      </div>
-      </paper-item>
-    </template>
-    </paper-listbox>
+  <div id="notePanel">
+    <div class="crtl-container">
+      <paper-icon-button icon="my-icons:share"></paper-icon-button>
+      <paper-icon-button icon="my-icons:create"></paper-icon-button>
+    </div>
+    <div class="noteTitle">
+      [[note.label]]
+    </div>
+    <div class="note.content">
+      [[note.value]]
+    </div>
+  </div>    
 
   </template>
   <script>
-  class noteList extends Polymer.Element {
-    static get is() { return 'note-list'; }
+  class noteView extends Polymer.Element {
+    static get is() { return 'note-view'; }
 
     static get properties() {
       return {
-        notes: Object
+        note: Object
       }
     }
   }
 
-  window.customElements.define(noteList.is, noteList);
+  window.customElements.define(noteView.is, noteView);
   </script>
 </dom-module>

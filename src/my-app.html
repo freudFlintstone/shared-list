@@ -41,9 +41,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <template>
     <style>
       :host {
-        --app-primary-color: #4285f4;
-        --app-secondary-color: black;
-
+        --app-primary-color: var(--paper-deep-purple-500);
+        --app-primary-light:var(--paper-deep-purple-300);
+        --app-primary-dark:var(--paper-deep-purple-700);
+        --app-secondary-color: var(--paper-blue-500);
+        --app-secondary-light: var(--paper-blue-300);
+        --app-secondary-dark: var(--paper-blue-700);
         display: block;
       }
 
@@ -82,6 +85,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         color: black;
         font-weight: bold;
       }
+
+      #logo {
+        display: block;
+        width: 48px;
+        height: 48px;
+        color: var(--app-primary-color);
+        --paper-icon-button: {
+          
+        }
+      }
+
     </style>
 
     <firebase-app
@@ -112,9 +126,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       
       <app-drawer id="drawer" slot="drawer">
         <app-toolbar>
-        <paper-icon-button icon="my-icons:list"></paper-icon-button>
+        <paper-icon-button id="logo" icon="my-icons:list" drawer-toggle></paper-icon-button>
         Ly.st</app-toolbar>
-        <note-list id="list" notes="[[data]]"></note-list>
+        <note-list id="list" notes="[[data]]" current="{{note}}" uid="[[user.uid]]" ></note-list>
       </app-drawer>
 
       <!-- Main content -->
@@ -137,7 +151,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             attr-for-selected="name"
             fallback-selection="view404"
             role="main">
-          <my-view1 id="v1" name="view1" user="[[user]]"></my-view1>
+          <my-view1 id="v1" name="view1" user="[[user]]" current="[[note]]"></my-view1>
           <my-view404 name="view404"></my-view404>
         </iron-pages>
         <app-toolbar> 
