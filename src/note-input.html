@@ -1,27 +1,92 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-toast/paper-toast.html">
+<link rel="import" href="../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-document.html">
 
 
 <dom-module id="note-input">
   <template>
     <style include="shared-styles">
       :host {
-        display:flex;
+        display:block;
       }
-      paper-input {
-        width: 100%;
+
+      .crtl-container {
+        margin-top: 20px;
+        background: var(--app-primary-color);
+        border-radius: 3px;
+        display: inline-flex;
+        width: 100%
       }
+      
+      .title {
+        width: 250px;
+      }
+
+      paper-icon-button {
+        color: rgba(255,255,255,0.5);
+      }
+
+      paper-icon-button:not([disabled]) {
+        color: white;
+        /*vertical-align: middle;*/
+      }
+
 
     </style>
 
-        <paper-input label="New note"></paper-input>
-        <paper-icon-button icon="my-icons:chevron-right"></paper-icon-button>
-        <paper-icon-button icon="my-icons:close"></paper-icon-button>
+    <firebase-document
+     id="f1"
+     
+     data="{{noteData}}"> 
+    </firebase-document>
+
+    <paper-input id="field1" label="Título" value="{{noteData.label}}" placeholder="Título curto" class="title" maxlength="40"></paper-input>
+
+    <!-- <paper-input id="field2" placeholder="Escreva sua nota aqui"></paper-input>   -->
+
+    <!-- <paper-textarea id="field2" placeholder="Escreva sua nota aqui" value="{{noteData.value}}"></paper-textarea> -->
+    <div class="crtl-container">
+      
+      <paper-icon-button icon="my-icons:share"></paper-icon-button>
+      
+      <div class="right">
+        <paper-icon-button icon="my-icons:check-circle" on-tap="save" disabled$="[[!noteData.value]]"></paper-icon-button>
+        <paper-icon-button icon="my-icons:highlight-off" on-tap="clear"></paper-icon-button>
+      </div>
+    </div>
+        <paper-textarea id="field2" placeholder="Escreva sua nota aqui" value="{{noteData.value}}"></paper-textarea>
+
+
+    <paper-toast id="errorToast"></paper-toast>
   </template>
   <script>
   class noteInput extends Polymer.Element {
     static get is() { return 'note-input'; }
+
+    static get properties() {
+      return {
+        noteData: Object
+      }
+    }
+
+    save() {
+      if(this.noteData.value) {
+        this.noteData.user = this.uid
+        this.$.f1.saveValue("/users/"+this.uid+"/notes");
+
+      } else {
+        this.$.errorToast.show("Escreva nos dois campos.");
+      }
+
+    }
+
+    clear() {
+      this.$.field1.value = ""
+      // this.$.field2.value = ""
+    }
   }
 
   window.customElements.define(noteInput.is, noteInput);

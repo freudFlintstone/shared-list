@@ -1,0 +1,94 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/wysiwyg-e/wysiwyg-e.html">
+<link rel="import" href="../bower_components/wysiwyg-e/tools/bold.html">
+<link rel="import" href="../bower_components/wysiwyg-e/tools/italic.html">
+<link rel="import" href="../bower_components/wysiwyg-e/tools/underline.html">
+<link rel="import" href="../bower_components/wysiwyg-e/tools/strike.html">
+<link rel="import" href="../bower_components/wysiwyg-e/tools/color.html">
+<link rel="import" href="../bower_components/wysiwyg-e/tools/clear.html">
+<link rel="import" href="../bower_components/wysiwyg-e/tools/code.html">
+<link rel="import" href="../bower_components/wysiwyg-e/tools/link.html">
+<link rel="import" href="../bower_components/wysiwyg-e/tools/image.html">
+<link rel="import" href="../bower_components/wysiwyg-e/tools/audio.html">
+<link rel="import" href="../bower_components/wysiwyg-e/tools/video.html">
+<link rel="import" href="../bower_components/wysiwyg-e/tools/ordered.html">
+<link rel="import" href="../bower_components/wysiwyg-e/tools/unordered.html">
+<link rel="import" href="../bower_components/wysiwyg-e/tools/indent.html">
+<link rel="import" href="../bower_components/wysiwyg-e/tools/outdent.html">
+<link rel="import" href="../bower_components/wysiwyg-e/tools/justify.html">
+<link rel="import" href="../bower_components/wysiwyg-e/tools/heading.html">
+<link rel="import" href="../bower_components/wysiwyg-e/tools/blockquote.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/marked-element/marked-import.html">
+
+
+
+
+
+<dom-module id="edit-bar">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+
+      paper-item {
+        text-align: right;
+      }
+
+      .label {
+        text-align: left;
+        width:100%;
+      }
+
+      paper-icon-button { 
+        text-align: right;
+      }
+    </style>
+
+    
+   <wysiwyg-e id="edit"  style="width: 100%; height: 70vh;">
+		<wysiwyg-tool-bold></wysiwyg-tool-bold>
+		<wysiwyg-tool-italic></wysiwyg-tool-italic>
+		<wysiwyg-tool-underline></wysiwyg-tool-underline>
+		<wysiwyg-tool-strike></wysiwyg-tool-strike>
+		<wysiwyg-tool-color></wysiwyg-tool-color>
+		<wysiwyg-tool-clear></wysiwyg-tool-clear>
+		<wysiwyg-tool-code></wysiwyg-tool-code>
+		<wysiwyg-tool-link></wysiwyg-tool-link>
+		<wysiwyg-tool-image></wysiwyg-tool-image>
+		<wysiwyg-tool-audio></wysiwyg-tool-audio>
+		<wysiwyg-tool-video></wysiwyg-tool-video>
+		<wysiwyg-tool-ordered></wysiwyg-tool-ordered>
+		<wysiwyg-tool-unordered></wysiwyg-tool-unordered>
+		<wysiwyg-tool-indent></wysiwyg-tool-indent>
+		<wysiwyg-tool-outdent></wysiwyg-tool-outdent>
+		<wysiwyg-tool-justify right center full></wysiwyg-tool-justify>
+		<wysiwyg-tool-heading h1 h2 h3 h4 h5 h6></wysiwyg-tool-heading>
+		<wysiwyg-tool-blockquote></wysiwyg-tool-blockquote>
+	</wysiwyg-e>
+
+  </template>
+  <script>
+  class editBar extends Polymer.Element {
+    static get is() { return 'edit-bar'; }
+
+    static get properties() {
+      return {
+        content: {
+        	type: Object,
+        	reflectToAttribute: true,
+        	value: function() {
+        		return {};
+        	}
+        }
+      }
+    }
+  }
+
+  window.customElements.define(editBar.is, editBar);
+  </script>
+</dom-module>
