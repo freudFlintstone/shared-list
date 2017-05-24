@@ -10,12 +10,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
-<link rel="import" href="note-input.html">
 <link rel="import" href="../bower_components/paper-material/paper-material.html">
 <link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
-
-
-<link rel="import" href="note-list.html">
+<link rel="import" href="note-input.html">
+<link rel="import" href="edit-bar.html">
 
 
 <dom-module id="my-view1">
@@ -29,9 +27,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .main-panel {
         display:flex;
       }
-      .main-panel > paper-material:first-child {
+      /*.main-panel > paper-material:first-child {
         margin-right: 8px;
-      }
+      }*/
       .list {
         width: 25%;
       }
@@ -40,28 +38,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
     </style>
+<!-- 
+    <firebase-query
+      id="query"
+      path="/users/{{user.uid}}/notes"
+      data="{{data}}">      
+    </firebase-query> -->
 
     <paper-material elevation="1">
-      <note-input></note-input>
+    <!-- <on-board></on-board> -->
     </paper-material>
 
-    <div class="main-panel">
-    <paper-material elevation="1" class="list">
-      <note-list></note-list>
+    <paper-material elevation="1">
+      <note-input id="nInput" uid=[[user.uid]]></note-input>
     </paper-material>
 
-    <paper-material elevation="1" class="editor">
-      <!-- <current-note></current-note> -->
-      <app-toolbar>
-      </app-toolbar>
-
+    <paper-material elevation="1">
+    <note-view></note-view>
     </paper-material>
-    </div>
+
   </template>
 
   <script>
     class MyView1 extends Polymer.Element {
       static get is() { return 'my-view1'; }
+
     }
 
     window.customElements.define(MyView1.is, MyView1);

@@ -21,9 +21,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-toast/paper-toast.html">
+<!--<link rel="import" href="../bower_components/paper-button/paper-button.html">-->
 
 <link rel="import" href="../bower_components/polymerfire/firebase-app.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-query.html">
+
+<link rel="import" href="note-input.html">
+<link rel="import" href="note-list.html">
 
 <link rel="import" href="my-icons.html">
 
@@ -54,6 +59,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app-header paper-icon-button {
         --paper-icon-button-ink-color: white;
       }
+      
+      .avatar {
+        margin-top: 4px;
+        width: 30px;
+        border-radius: 15px;
+      }
 
       .drawer-list {
         margin: 0 20px;
@@ -81,8 +92,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       messaging-sender-id="587851079569">
     </firebase-app>
 
-    <firebase-auth id="auth" user="{{user}}" provider="{{authProvider}}" on-error="handleError">
+    <firebase-auth id="auth" user="{{user}}" provider="{{authProvider}}">
     </firebase-auth>
+    
+    <firebase-query
+      id="query"
+      path="/users/{{user.uid}}/notes"
+      data="{{data}}">      
+    </firebase-query>
 
     <app-location route="{{route}}"></app-location>
     <app-route
@@ -92,24 +109,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         tail="{{subroute}}"></app-route>
 
     <app-drawer-layout fullbleed>
-      <!-- Drawer content -->
+      
       <app-drawer id="drawer" slot="drawer">
-        <app-toolbar>Menu</app-toolbar>
-        <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <a name="view1" href="view1">Home</a>
-          <a name="view2" href="view2">View Two</a>
-          <a name="view3" href="view3">View Three</a>
-        </iron-selector>
+        <app-toolbar>
+        <paper-icon-button icon="my-icons:list"></paper-icon-button>
+        Ly.st</app-toolbar>
+        <note-list id="list" notes="[[data]]"></note-list>
       </app-drawer>
 
       <!-- Main content -->
-      <app-header-layout has-scrolling-region>
+      <app-header-layout>
 
         <app-header slot="header" condenses reveals effects="waterfall">
           <app-toolbar>
+            <!-- <div condensed-item>[[user.displayName]]</div> -->
             <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
-            <div main-title>My App</div>
-            <paper-icon-button icon="my-icons:chevron-right" on-tap="logIn"></paper-icon-button>
+            <div main-title>[[user.displayName]]</div>
+            <div hidden$="[[user]]"><paper-icon-button icon="my-icons:account-circle" on-tap="logIn"></paper-icon-button></div>
+            <div class="avatar" hidden$="[[!user.photoURL]]"><img class="avatar" src="[[user.photoURL]]"></div>
+            <div hidden$="[[!user]]"><paper-icon-button icon="my-icons:close" on-tap="logOut"></paper-icon-button></div>
+
           </app-toolbar>
         </app-header>
 
@@ -118,15 +137,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             attr-for-selected="name"
             fallback-selection="view404"
             role="main">
-          <my-view1 name="view1"></my-view1>
-          <my-view2 name="view2"></my-view2>
-          <my-view3 name="view3"></my-view3>
+          <my-view1 id="v1" name="view1" user="[[user]]"></my-view1>
           <my-view404 name="view404"></my-view404>
         </iron-pages>
+        <app-toolbar> 
+        </app-toolbar>
       </app-header-layout>
     </app-drawer-layout>
 
-    <paper-toast id="errorToast" text="'s all good."></paper-toast>
+    <paper-toast id="errorToast" text="'s all good.">      
+    </paper-toast>
 
   </template>
 
@@ -202,12 +222,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         .then(function(response){})
         .catch(function(error){
           this.loginError = error;
-          console.log(this.loginError)
+          console.log(this.loginError);
+          this.handleError()
         })
       }
 
-      handleError() {
-        this.$.errorToast.show()
+      handleError(msg) {
+        this.$.errorToast.show(msg)
+      }
+
+      closeToast(e) {
+        console.log(e);
+      }
+
+      logOut() {
+        this.$.auth.signOut();
       }
     }
 
