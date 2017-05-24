@@ -1,0 +1,58 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<!-- <link rel="import" href="../bower_components/paper-card/paper-card.html"> -->
+
+
+<dom-module id="onboard-view">
+  <template>
+    <style include="shared-styles">
+      :host {
+        /*width: initial;*/
+        display: inline-flex;
+        white-space: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+      }
+
+      .card {
+        white-space: nowrap;
+        overflow-x: auto;
+      }
+     
+    </style>
+
+ <paper-material class="card" elevation="1">
+   <h2>Ly.st!</h2>
+ </paper-material>
+
+  <paper-material class="card" elevation="1">
+   <h2>Ly.st!</h2>
+ </paper-material>
+
+  <paper-material class="card" elevation="1">
+   <h2>Ly.st!</h2>
+ </paper-material>
+
+ <paper-material class="card" elevation="1">
+   <h2>Ly.st!</h2>
+ </paper-material>
+
+  
+
+  </template>
+  <script>
+  class onboardView extends Polymer.Element {
+    static get is() { return 'onboard-view'; }
+
+    static get properties() {
+      return {
+        onboard: Object
+      }
+    }
+  }
+
+  window.customElements.define(onboardView.is, onboardView);
+  </script>
+</dom-module>

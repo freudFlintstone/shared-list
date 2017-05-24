@@ -22,7 +22,9 @@
     "iron-icons": "PolymerElements/iron-icons#2.0.0",
     "wysiwyg-e": "miztroh/wysiwyg-e#^2.0.2",
     "neon-animation": "PolymerElements/neon-animation#2.0.0",
-    "paper-listbox": "PolymerElements/paper-listbox#2.0.0"
+    "paper-listbox": "PolymerElements/paper-listbox#2.0.0",
+    "paper-card": "PolymerElements/paper-card#2.0.0",
+    "paper-toggle-button": "PolymerElements/paper-toggle-button#2.0.0"
   },
   "resolutions": {
     "polymer": "^2.0.0-rc.3"
