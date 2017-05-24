@@ -33,7 +33,7 @@
      data="{{selNote}}"> 
     </firebase-document>
 
-    <paper-listbox selected="{{selected}}" fallback-selection="0">
+    <paper-listbox id="listbox" selected="{{selected}}" default="null">
     <template is="dom-repeat" items="[[notes]]">
       <paper-item>
       <div class="label">
@@ -90,13 +90,18 @@
       this.$.f2.setStoredValue("/users/"+this.uid+"/notes/"+this.noteID, this.selNote);
     }
 
-    delete(e) {
-      console.log("del: "+e)
+    delete() {
+      this.$.f2.setStoredValue("/users/"+this.uid+"/notes/"+this.noteID, null);
+      this.$.listbox.selected = null;
+      console.log(this.selected)
     }
 
     _selectedChanged() {
       this.current = this.notes[this.selected];
       this.noteID = this.current.$key;
+      // if (this.current) {
+       // this.noteID = this.current.$key;
+      // }
     }
   }
 
