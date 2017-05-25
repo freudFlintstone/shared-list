@@ -14,7 +14,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
 <link rel="import" href="note-input.html">
 <link rel="import" href="note-view.html">
-<link rel="import" href="edit-bar.html">
+<!-- <link rel="import" href="edit-bar.html"> -->
 <!-- <link rel="import" href="onboard-view.html"> -->
 
 
@@ -31,12 +31,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       .onboarding {
-        max-width: 90vw;
-        display: inline-flex;
-        white-space: nowrap;
+        /*width: 100%;*/
+        /*display: inline;*/
+        /*white-space: nowrap;
         overflow-x: auto;
-        overflow-y: hidden;
+        overflow-y: hidden;*/
+        background: var(--paper-deep-purple-900);
+        color: white;
+        text-align: center;
       }
+
       /*.main-panel > paper-material:first-child {
         margin-right: 8px;
       }*/
@@ -51,7 +55,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <div hidden$="[[user]]">
     <paper-material class="onboarding" elevation="1">
-      <onboard-view></onboard-view>
+      <h3>Ly.st! é um app simples para compartilhar notas e listas. Faça login para experimentar.</h2>
+
+    <!--   <p>1. Escreva ou cole sua nota.</p>
+      <p>2. Salve. Ly.st! formata seu texto automaticamente.</p>
+      <p>3. Convide outras pessoas para ver ou editar.</p>
+ -->
+      <!-- <onboard-view></onboard-view> -->
     </paper-material>
     </div>
 

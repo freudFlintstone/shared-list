@@ -127,7 +127,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <app-drawer id="drawer" slot="drawer">
         <app-toolbar>
         <paper-icon-button id="logo" icon="my-icons:list" drawer-toggle></paper-icon-button>
-        Ly.st</app-toolbar>
+        Ly.st!</app-toolbar>
         <note-list id="list" notes="[[data]]" current="{{note}}" uid="[[user.uid]]" ></note-list>
       </app-drawer>
 
@@ -139,7 +139,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <!-- <div condensed-item>[[user.displayName]]</div> -->
             <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
             <div main-title>[[user.displayName]]</div>
-            <div hidden$="[[user]]"><paper-icon-button icon="my-icons:account-circle" on-tap="logIn"></paper-icon-button></div>
+            <div hidden$="[[user]]"><paper-icon-button icon="my-icons:account-circle" on-tap="logIn"></paper-icon-button>Login</div>
             <div class="avatar" hidden$="[[!user.photoURL]]"><img class="avatar" src="[[user.photoURL]]"></div>
             <div hidden$="[[!user]]"><paper-icon-button icon="my-icons:close" on-tap="logOut"></paper-icon-button></div>
 

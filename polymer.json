@@ -7,7 +7,8 @@
     "src/my-view3.html",
     "src/my-view404.html",
     "src/note-input.html",
-    "src/note-list.html"
+    "src/note-list.html",
+    "src/note-view.html"
   ],
   "sources": [
     "src/**/*",
